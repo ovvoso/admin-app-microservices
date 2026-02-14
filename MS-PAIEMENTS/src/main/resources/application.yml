@@ -1,0 +1,66 @@
+server:
+  port: 5175
+
+spring:
+  application:
+    name: paiement-ms
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:3308/${DB_NAME:paiement-ms-db}?createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:}
+    driverClassName: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+
+  #modification pour le caching
+  cache:
+    type: redis
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      timeout: 60000
+      ssl:
+        enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,wavefront
+  info:
+    env:
+      enabled: true
+
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+  health:
+    redis:
+      enabled: true #modification pour redis == false a true
+    probes:
+      enabled: true
+
+info:
+  application:
+    name: paiement-ms
+    version: '@project.version@'
+
+wavefront:
+  application:
+    name: paiement-ms
+
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+  file:
+    name: logs/logs.log

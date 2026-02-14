@@ -1,0 +1,40 @@
+services:
+
+  mysql-db_commandes:
+    image: mysql:8.0
+    container_name: container_mysql-db_commandes
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: db_commandes
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 
+    ports:
+      - "3307:3306"
+    volumes:
+      - commande_mysql_data:/var/lib/mysql
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+
+  phpmyadmin-db_commandes:
+    container_name: container_phpmyadmin-db_commandes
+    image: phpmyadmin/phpmyadmin:latest
+    ports:
+      - "3001:80"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      PMA_HOST: mysql-db_commandes
+      PMA_USER: root
+      PMA_PASSWORD: 
+    depends_on:
+      - mysql-db_commandes
+    restart: unless-stopped
+
+  # redis:
+  #   image: redis:5.0.3-alpine
+  #   container_name: commande-ms-redis
+  #   ports:
+  #     - "6380:6379"
+
+volumes:
+  commande_mysql_data:
+    driver: local

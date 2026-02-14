@@ -1,0 +1,5 @@
+Paiements
+id         : long
+montant    : double
+date       : Date
+idCommande : long

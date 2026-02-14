@@ -1,0 +1,40 @@
+services:
+
+  mysql-db_paiements:
+    image: mysql:8.0
+    container_name: container_mysql-db_paiements
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: db_paiements
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 
+    ports:
+      - "3308:3306"
+    volumes:
+      - paiement_mysql_data:/var/lib/mysql
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+
+  phpmyadmin-db_paiements:
+    container_name: container_phpmyadmin-db_paiements
+    image: phpmyadmin/phpmyadmin:latest
+    ports:
+      - "3002:80"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      PMA_HOST: mysql-db_paiements
+      PMA_USER: root
+      PMA_PASSWORD: 
+    depends_on:
+      - mysql-db_paiements
+    restart: unless-stopped
+
+  # redis:
+  #   image: redis:5.0.3-alpine
+  #   container_name: paiement-ms-redis
+  #   ports:
+  #     - "6381:6379"
+
+volumes:
+  paiement_mysql_data:
+    driver: local

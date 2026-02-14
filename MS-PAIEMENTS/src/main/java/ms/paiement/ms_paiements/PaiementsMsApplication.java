@@ -1,13 +1,13 @@
-package ms.msproduit.ms_produits;
+package ms.paiement.ms_paiements;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MsProduitsApplication {
+public class PaiementsMsApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MsProduitsApplication.class, args);
+		SpringApplication.run(PaiementsMsApplication.class, args);
 	}
 
 }

@@ -1,0 +1,6 @@
+Commandes
+id          : long
+date        : Date
+prix        : int
+refProduits : String
+quantite    : double

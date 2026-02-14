@@ -1,0 +1,36 @@
+GET http://localhost:5175/paiements
+
+###
+POST http://localhost:5175/paiements
+Content-Type: application/json
+
+{
+    "montant": 10000.0,
+    "date": "2026-01-24",
+    "idCommande": 1
+}
+
+
+
+#############################
+GET http://localhost:5174/commandes
+
+
+###
+POST http://localhost:5174/commandes
+Content-Type: application/json
+
+{
+    "date": "2026-01-24",
+    "prix": 200000,
+    "refProduits": "REF-001",
+    "quantite": 2
+}
+
+
+
+#############################
+GET http://localhost:5173/produits
+
+###
+GET http://localhost:5173/produits/REF-002
